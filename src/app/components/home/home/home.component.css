@@ -1,0 +1,104 @@
+.my-tab {
+    font-size: 17px;
+    padding: 10px 10px;
+    cursor: pointer;
+    border: 1px solid #e8e8e8;
+    margin: 2px;
+    color: #9e9e9e;
+}
+
+.my-tab:hover {
+    background-color: #e4e4e4;
+    color: #484848;
+}
+
+.my-tab-active {
+    border-bottom: 1px solid #585858;
+    color: #585858;
+    background: #efefef;
+}
+
+.my-tab-oferta {
+    border: 1px solid #3dff69 !important;
+    background-color: #12b337 !important;
+    color: white !important;
+}
+
+.my-tab div mat-icon {
+    vertical-align: middle;
+}
+
+.my-tab div {
+    margin: 3px 10px 3px 10px;
+}
+
+.dv-socio {
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 10px 0px 0 0;
+}
+
+.disclaimer {
+    border: 1px dashed #c11111;
+    color: #c11111;
+    margin: 0 10px 0 10px;
+    padding: 5px 5px 5px 10px;
+    font-size: 13px;
+}
+
+ul {
+    font-size: 14px;
+    margin: 10px 0 10px 0;
+}
+
+.txt-name {
+    font-size: 12px;
+    color: gray;
+    margin: 0;
+}
+
+.card-head-1 {
+    background-color: #3a3a3a;
+    color: white;
+    font-size: 12px;
+}
+
+#red-slider .md-thumb:after,
+#red-slider .md-track-fill {
+    background-color: #fb9916 !important;
+    border-color: #fb9916 !important;
+}
+
+#red-slider .md-focus-thumb,
+#red-slider .md-focus-ring {
+    background-color: #fb9916;
+}
+
+mat-expansion-panel-header {
+    color: white !important;
+    background-color: #fb9916 !important;
+}
+
+mat-expansion-panel-header:hover {
+    color: white !important;
+    background-color: #e98d13 !important;
+}
+
+::ng-deep .specific-class>.mat-expansion-indicator:after {
+    color: white;
+}
+
+.name-file {
+    margin: 0 0 0 0;
+    font-size: 11px;
+}
+
+input[type="file"] {
+    font-size: 12px;
+    margin: 0 0 7px 0;
+}
+
+th {
+    font-size: 11px;
+}
+

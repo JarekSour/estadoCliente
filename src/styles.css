@@ -1,1 +1,157 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "../node_modules/bootstrap/dist/css/bootstrap.css";
+.cursor {
+    cursor: pointer !important;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.margin-top-40 {
+    margin-top: 40px;
+}
+
+.margin-top-65 {
+    margin-top: 65px;
+}
+
+.margin-top-70 {
+    margin-top: 70px;
+}
+
+.margin-top-80 {
+    margin-top: 80px;
+}
+
+.margin-top-200 {
+    margin-top: 200px;
+}
+
+.margin-bottom-20 {
+    margin-bottom: 20px;
+}
+
+form h2 {
+    color: #FF8700;
+}
+
+.my-orange {
+    color: #FF8700;
+}
+
+.my-gray {
+    color: gray;
+}
+
+.padding-card {
+    padding: 40px 0px;
+}
+
+.btn-orange {
+    color: white !important;
+    background-color: #F49600;
+}
+
+.input-full-width {
+    width: 100%;
+}
+
+.row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.alert-danger {
+    width: 100%;
+    color: #ca0719;
+    background-color: #00000000;
+    border-color: #ce2131;
+}
+
+.loader {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    outline: 0;
+    opacity: 1;
+    background: white;
+    z-index: 15;
+}
+
+.loader mat-spinner {
+    margin: 10px auto;
+}
+
+.loader-hide {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s linear, opacity 0.3s linear;
+    -webkit-transition: opacity 0.5s;
+}
+
+.loader div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 519px;
+    text-align: center;
+}
+
+.loader div p {
+    font-size: 24px;
+    color: #0078c4;
+}
+
+.padding-25 {
+    padding: 25px;
+}
+
+.btn-green-fill {
+    border: 1px solid #009340 !important;
+    background: #009340;
+    color: white !important;
+}
+
+.btn-gray-fill {
+    border: 1px solid #3f3f3f !important;
+    background: #3f3f3f;
+    color: white !important;
+}
+
+button:focus {
+    outline: 0;
+}
+
+.btn-green {
+    border: 1px solid #009340 !important;
+    background-color: white !important;
+    color: #009340 !important;
+}
+
+.btn-green:hover {
+    background: #009340 !important;
+    color: white !important;
+}
+
+.btn-red {
+    border: 1px solid #e00000 !important;
+    background-color: white !important;
+    color: #e00000 !important;
+}
+
+.btn-red:hover {
+    background: #e00000 !important;
+    background-color: #e00000 !important;
+    color: white !important;
+}
+
+.show-dialog {
+    display: block;
+    opacity: 1;
+}
+

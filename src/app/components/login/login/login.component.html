@@ -1,0 +1,36 @@
+<app-nav></app-nav>
+
+<section class="margin-top-65">
+    <div class="row margin-top-200">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <form class="padding-card" (submit)="doLogin()" #loginForm="ngForm">
+                    <h2 class="text-center">Inicio de sesión Cliente</h2>
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <mat-form-field class="input-full-width">
+                                <input matInput placeholder="RUT" name="user" [(ngModel)]="json.rut" required (change)="formatRut($event)">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6 offset-md-3">
+                            <mat-form-field class="input-full-width">
+                                <input matInput placeholder="Contraseña" type="password" name="passw" [(ngModel)]="json.passw" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6 offset-md-3" *ngIf="error">
+                            <div class="alert alert-danger" role="alert">
+                                {{error}}
+                            </div>
+                        </div>
+                        <div class="col-md-6 offset-md-3 height-50">
+                            <div class="float-right">
+                                <button mat-button class="btn btn-orange" [disabled]="!loginForm.form.valid">Ingresar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+

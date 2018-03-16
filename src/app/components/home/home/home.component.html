@@ -1,0 +1,695 @@
+<app-nav></app-nav>
+
+<section class="margin-top-80">
+    <div class="row" style="justify-content: center;">
+        <div class="my-tab" (click)="tab = 1" [ngClass]="tab == 1 ? 'my-tab-active':''">
+            <div>
+                <mat-icon>home</mat-icon>
+                <span>INICIO</span>
+            </div>
+        </div>
+        <div class="my-tab" (click)="tab = 2" [ngClass]="tab == 2 ? 'my-tab-active':''">
+            <div>
+                <mat-icon>business</mat-icon>
+                <span>DATOS DE EMPRESA</span>
+            </div>
+        </div>
+        <div class="my-tab" (click)="tab = 3" [ngClass]="tab == 3 ? 'my-tab-active':''">
+            <div>
+                <mat-icon>account_circle</mat-icon>
+                <span>REPRESENTANTE LEGAL</span>
+            </div>
+        </div>
+        <div class="my-tab" (click)="tab = 4" [ngClass]="tab == 4 ? 'my-tab-active':''">
+            <div>
+                <mat-icon>verified_user</mat-icon>
+                <span>SOCIOS</span>
+            </div>
+        </div>
+        <div class="my-tab" (click)="tab = 5" [ngClass]="tab == 5 ? 'my-tab-active':''">
+            <div>
+                <mat-icon>insert_drive_file</mat-icon>
+                <span>DOCUMENTACIÓN</span>
+            </div>
+        </div>
+        <div class="my-tab" (click)="tab = 6" [ngClass]="ofertaRecibida ? 'my-tab-oferta':tab == 6 ? 'my-tab-active':''">
+            <div>
+                <mat-icon *ngIf="!ofertaFinalizada &amp;&amp; !ofertaRecibida">attach_money</mat-icon>
+                <span>{{ofertaFinalizada ? 'EN ESPERA': ofertaRecibida ? '¡Lo Quiero!':'¿Qué quiero?'}}</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container margin-top-20 margin-bottom-20">
+        <div class="row" *ngIf="tab == 1">
+            <div class="row">
+                <div class="col-md-3 offset-md-1">
+                    <img src="assets/img/pato.png" alt="">
+                </div>
+                <div class="col-md-6">
+                    <h2 class="my-orange text-center margin-top-80">Bienvenido a Banco Estado</h2>
+                    <p class="text-center">A continuación lo invitamos a una nueva experiencia online, donde al finalizar podrá obtener de manera
+                        rápida respuesta a sus necesidades</p>
+                    <p class="text-center">Favor completar todos los cuadros recuadros con el mayor detalle en beneficio de una mejor propuesta
+                        para sus interés.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="tab == 2">
+            <div class="col-md-10 offset-md-1">
+                <div class="card input-full-width padding-25 ">
+                    <div>
+                        <h4 class="my-orange" style="font-weight: 400;">Datos de Empresa</h4>
+                        <form (submit)="updateDataEmpresa()" #empresaForm="ngForm">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Nombre o razón social" name="nombre" [(ngModel)]="jsonEmpresa.nombre" [disabled]="isEditable">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput [matDatepicker]="picker1" [(ngModel)]="jsonEmpresa.constitucion" name="constitucion" placeholder="Fecha de constitución"
+                                            disabled="true" required>
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1 [disabled]="isEditable" touchUi="true"></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="input-full-width">
+                                        <mat-select placeholder="Régimen tributario" [(ngModel)]="jsonEmpresa.regimen" name="regimen" required [disabled]="isEditable">
+                                            <mat-option value="Renta Presunta">Renta Presunta</mat-option>
+                                            <mat-option value="Tributación simplificada">Tributación simplificada</mat-option>
+                                            <mat-option value="Renta Atribuida">Renta Atribuida</mat-option>
+                                            <mat-option value="Semi Integrado ">Semi Integrado </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6" style="padding-top: 15px;">
+                                    <mat-checkbox name="financiera" [(ngModel)]="jsonEmpresa.formalidad" name="formalidad" [disabled]="isEditable">
+                                        <span class="checkbox-text-wrap">
+                                            ¿La empresa se encuentra formalizada?
+                                        </span>
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Actividad económica" name="actividad" [(ngModel)]="actividad" [disabled]="isEditable" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Giro" name="giro" [(ngModel)]="jsonEmpresa.giro" [disabled]="isEditable" required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Nivel de venta anual (en UF)" name="nivel" [(ngModel)]="jsonEmpresa.nivel" [disabled]="isEditable"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="IVA automático (en UF)" name="iva" [(ngModel)]="jsonEmpresa.iva" [disabled]="isEditable" required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="País" name="pais" [(ngModel)]="jsonEmpresa.pais" [disabled]="isEditable" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Correo electrónico" name="correo" type="email" [(ngModel)]="jsonEmpresa.email" [disabled]="isEditable"
+                                            required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Dirección" name="direccion" [(ngModel)]="jsonEmpresa.direccion" [disabled]="isEditable" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Número" name="numero" [(ngModel)]="jsonEmpresa.numero" [disabled]="isEditable" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Oficina" name="oficina" [(ngModel)]="jsonEmpresa.oficina" [disabled]="isEditable">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Comuna" name="comuna" [(ngModel)]="jsonEmpresa.comuna" [disabled]="isEditable" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Región" name="region" [(ngModel)]="jsonEmpresa.ciudad" [disabled]="isEditable" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Ciudad" name="ciudad" [(ngModel)]="jsonEmpresa.region" [disabled]="isEditable" required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="input-full-width">
+                                        <span matPrefix>+56 &nbsp;</span>
+                                        <input matInput type="tel" placeholder="Teléfono" [(ngModel)]="jsonEmpresa.fono" name="fono" required maxlength="9" minlength="9"
+                                            [disabled]="isEditable">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="input-full-width">
+                                        <span matPrefix>+569 &nbsp;</span>
+                                        <input matInput type="tel" placeholder="Celular" [(ngModel)]="jsonEmpresa.celular" name="celular" required maxlength="8"
+                                            minlength="8" [disabled]="isEditable">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="text-rigth">
+                                <div class="float-right">
+                                    <button mat-button type="submit" class="btn btn-green-fill btn-sm" [disabled]="!empresaForm.form.valid">Guardar datos</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="tab == 3">
+            <div class="col-md-10 offset-md-1">
+                <div class="card input-full-width padding-25 ">
+                    <div>
+                        <h4 class="my-orange" style="font-weight: 400;">Representante Legal</h4>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <mat-form-field class="input-full-width">
+                                    <input matInput placeholder="Rut" name="rrut" [(ngModel)]="jsonRepresentante.rut" required [disabled]="isEditable">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field class="input-full-width">
+                                    <input matInput [matDatepicker]="picker2" placeholder="Fecha de nacimiento" disabled name="rnacimiento" [(ngModel)]="jsonRepresentante.nacimiento"
+                                        required disabled="true">
+                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2 touchUi="true" [disabled]="isEditable"></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field class="input-full-width">
+                                    <input matInput placeholder="Nacionalidad" name="rnacionalidad" [(ngModel)]="jsonRepresentante.nacionalidad" required [disabled]="isEditable">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <mat-form-field class="input-full-width">
+                                    <input matInput placeholder="Nombres" name="rnombre" [(ngModel)]="jsonRepresentante.nombre" required [disabled]="isEditable">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field class="input-full-width">
+                                    <input matInput placeholder="Apellido Paterno" name="rpaterno" [(ngModel)]="jsonRepresentante.paterno" required [disabled]="isEditable">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field class="input-full-width">
+                                    <input matInput placeholder="Apellido Materno" name="rmaterno" [(ngModel)]="jsonRepresentante.materno" required [disabled]="isEditable">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="text-rigth">
+                            <div class="float-right">
+                                <button mat-button type="button" class="btn btn-green-fill btn-sm" [disabled]="isEditable">Guardar datos</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="tab == 4">
+            <div class="col-md-10 offset-md-1">
+                <div class="card input-full-width padding-25 ">
+                    <div>
+                        <h4 class="my-orange" style="font-weight: 400;">Socios de la empresa</h4>
+                        <em class="my-gray">Agrege los socios de la empresa, recuerde que debe ingresarlos todos, de no ser así esto puede ser
+                            causal de rechazo</em>
+                        <div class="margin-top-20 dv-socio">
+                            <div class="row ">
+                                <div class="col-md-4">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Nombres" value="Jarek" required [disabled]="isEditable">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Apellido paterno" value="Castro" required [disabled]="isEditable">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Apellido materno" value="Carvacho" required [disabled]="isEditable">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Porcentaje de participación" value="20" required [disabled]="isEditable">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Dirección" value="Padre Mariano 64" required [disabled]="isEditable">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Comuna" value="Providencia" required [disabled]="isEditable">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="margin-top-20 dv-socio">
+                            <div class="row ">
+                                <div class="col-md-4">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Nombres" value="Javier" required [disabled]="isEditable">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Apellido paterno" value="Fernandez" required [disabled]="isEditable">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Apellido materno" value="Amador" required [disabled]="isEditable">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Porcentaje de participación" value="20" required [disabled]="isEditable">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Dirección" value="Alvarez de Toledo 258" required [disabled]="isEditable">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Comuna" value="San Miguel" required [disabled]="isEditable">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-rigth">
+                            <div class="float-right margin-top-20">
+                                <button mat-button type="button" class="btn btn-green-fill btn-sm" [disabled]="isEditable">+1 Agregar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="tab == 5">
+            <div class="col-md-10 offset-md-1">
+                <div class="card input-full-width padding-25 ">
+                    <div>
+                        <h4 class="my-orange" style="font-weight: 400;">Documentación de la empresa</h4>
+                        <div class="margin-top-20 dv-socio">
+                            <p class="disclaimer">A continuación debe adjuntas los siguentes archivos, los cuales son obligatorios, de faltar,
+                                omisión o modifiacion serán causal de rechazo</p>
+                            <ul>
+                                <li>Carpeta tributaria de la empresa</li>
+                                <li>Patrimonio de la empresa</li>
+                                <li>Carpeta tributaria o 6 últimas boletas o 6 últimas liqudaciones de cada socio</li>
+                                <li>Patrimonio de cada uno de los socios</li>
+                            </ul>
+                            <dropzone *ngIf="!isEditable" [config]="config" [message]="'Click o toma y suelta tus archivos aquí'" (sending)="onBeforeSend($event)"
+                                (error)="onUploadError($event)" (success)="onUploadSuccess($event)"></dropzone>
+
+                            <table class="table table-striped">
+                                <tr *ngFor="let item of jsonDocumentDefault">
+                                    <td>
+                                        {{item.Filename}}
+                                    </td>
+                                    <td class="text-right">
+                                        <div class="button-row">
+                                            <button mat-mini-fab class="btn-green" (click)="downloadFile(item)">
+                                                <mat-icon>file_download</mat-icon>
+                                            </button>
+                                            <button mat-mini-fab class="btn-red" (click)="deleteFile(item)" *ngIf="!isEditable">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="tab == 6">
+            <div [ngClass]="ofertaRecibida? 'col-md-12':'col-md-10 offset-md-1'">
+                <div class="card input-full-width padding-25 ">
+                    <div *ngIf="ofertaFinalizada">
+                        <h3 class="my-orange">En espera de que un ejecutivo compruebe tus archivos y petición</h3>
+                    </div>
+                    <div *ngIf="!ofertaFinalizada">
+                        <div *ngIf="ofertaRecibida">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header card-head-1">
+                                            Configura tu producto
+                                        </div>
+                                        <div class="card-body">
+                                            <p>Selecciona tu monto:
+                                                <span style="float: right;margin-right: 10px;">{{formatNumber(jsonOferta.rango)}}</span>
+                                            </p>
+                                            <mat-slider style="width: 100%" [max]="jsonOferta.rangoMax" step="1" [min]="jsonOferta.rangoMin" [(ngModel)]="jsonOferta.rango"
+                                                [step]="1" (change)="updateValorCuota()"></mat-slider>
+                                            <p>Selecciona el número de cuotas:
+                                                <span style="float: right;margin-right: 10px;">{{jsonOferta.cuota}}</span>
+                                            </p>
+                                            <mat-slider style="width: 100%" [max]="jsonOferta.cuotaMax" [step]="1" [min]="jsonOferta.cuotaMin" [(ngModel)]="jsonOferta.cuota"
+                                                [step]="1" (change)="updateDateVencimiento();updateValorCuota()"></mat-slider>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5 class="my-orange" style="font-weight: 700">Descripción del producto</h5>
+                                    <p class="my-orange" style="font-weight: 400;margin: 0;">Garantía:
+                                        <span class="my-gray">{{jsonOferta.garantia}}</span>
+                                    </p>
+                                    <p class="my-orange" style="font-weight: 400;margin: 0;">Comisión:
+                                        <span class="my-gray">{{jsonOferta.comision}}</span>
+                                    </p>
+                                    <p class="my-orange" style="font-weight: 400;margin: 0;">Fecha de primer pago:
+                                        <span class="my-gray">{{today | date:'dd/MM/yyyy'}}</span>
+                                    </p>
+                                    <p class="my-orange" style="font-weight: 400;margin: 0;">Fecha de vencimiento:
+                                        <span class="my-gray">{{vence | date:'dd/MM/yyyy'}}</span>
+                                    </p>
+                                    <p class="my-orange" style="font-weight: 400;margin: 0;">Fecha último pago ({{jsonOferta.cuota}} cuota):
+                                        <span class="my-gray">{{ultimo | date:'dd/MM/yyyy'}}</span>
+                                    </p>
+                                    <p class="my-orange" style="font-weight: 400;margin: 0;">Motivo:
+                                        <span class="my-gray">{{jsonOferta.motivo}}</span>
+                                    </p>
+                                    <p class="my-orange" style="font-weight: 400;margin: 0;">Objetivo:
+                                        <span class="my-gray">{{jsonOferta.objetivo}}</span>
+                                    </p>
+                                    <p class="my-orange" style="font-weight: 400;margin: 0;">Monto Total:
+                                        <span class="my-gray">{{formatNumber(jsonOferta.rango)}}</span>
+                                    </p>
+                                    <p class="my-orange" style="font-weight: 400;margin: 0;">Número de cuotas:
+                                        <span class="my-gray">{{jsonOferta.cuota}}</span>
+                                    </p>
+                                    <p class="my-orange" style="font-weight: 400;margin: 0;">Valor de cuotas:
+                                        <span class="my-gray">{{jsonOferta.valorcuota}}</span>
+                                    </p>
+                                    <p class="my-orange" style="font-weight: 400;">Valor de la garantía:
+                                        <span class="my-gray">{{jsonOferta.valorgarantia}}</span>
+                                    </p>
+                                    <mat-accordion>
+                                        <mat-expansion-panel>
+                                            <mat-expansion-panel-header class="specific-class">
+                                                <mat-panel-title style="color:white">
+                                                    Documentos obligatorios a adjuntar
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+
+                                            <div *ngFor="let item of jsonCondicion">
+                                                <p class="name-file">{{item}}</p>
+                                                <input type="file" (change)="uploadFile($event, item)">
+                                            </div>
+
+                                        </mat-expansion-panel>
+                                        <mat-expansion-panel>
+                                            <mat-expansion-panel-header class="specific-class">
+                                                <mat-panel-title style="color:white">
+                                                    Documentos auto-generados
+                                                </mat-panel-title>
+                                                <mat-panel-description>
+                                                    Solo descargar y firmar
+                                                </mat-panel-description>
+                                            </mat-expansion-panel-header>
+                                            <div class="margin-top-20">
+                                                <mat-chip-list>
+                                                    <mat-chip class="cursor" (click)="downloadAnexo1()">Anexo 1 CORFO</mat-chip>
+                                                </mat-chip-list>
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center margin-top-20">
+                                    <button mat-button (click)="modalFinalizar = !modalFinalizar" class="btn btn-green-fill btn-sm">Confirmar solicitud</button>
+                                    <button mat-button (click)="downloadTabla()" class="btn btn-gray-fill btn-sm">Descargar tabla de pago</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="!ofertaRecibida">
+                            <div *ngIf="!isEditable">
+                                <form (submit)="sendSolicitud()" #solicitudForm="ngForm">
+                                    <h4 class="my-orange" style="font-weight: 400;    margin: 0 0 15px 0;">¿Que necesito?</h4>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <mat-checkbox name="Credito" [(ngModel)]="jsonSolicitud.Productos.Credito" name="Credito" [disabled]="isEditable">
+                                                <span class="checkbox-text-wrap">
+                                                    Credito
+                                                </span>
+                                            </mat-checkbox>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-checkbox name="Leasing" [(ngModel)]="jsonSolicitud.Productos.Leasing" name="Leasing" [disabled]="isEditable">
+                                                <span class="checkbox-text-wrap">
+                                                    Leasing
+                                                </span>
+                                            </mat-checkbox>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-checkbox name="Factoring" [(ngModel)]="jsonSolicitud.Productos.Factoring" name="Factoring" [disabled]="isEditable">
+                                                <span class="checkbox-text-wrap">
+                                                    Factoring
+                                                </span>
+                                            </mat-checkbox>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-checkbox name="Boleta" [(ngModel)]="jsonSolicitud.Productos.Boleta" name="Boleta" [disabled]="isEditable">
+                                                <span class="checkbox-text-wrap">
+                                                    Boleta de Garantía
+                                                </span>
+                                            </mat-checkbox>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-checkbox name="PAE" [(ngModel)]="jsonSolicitud.Productos.PAE" name="PAE" [disabled]="isEditable">
+                                                <span class="checkbox-text-wrap">
+                                                    PAE
+                                                </span>
+                                            </mat-checkbox>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-checkbox name="Venta" [(ngModel)]="jsonSolicitud.Productos.Venta" name="Venta" [disabled]="isEditable">
+                                                <span class="checkbox-text-wrap">
+                                                    Venta contado
+                                                </span>
+                                            </mat-checkbox>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-checkbox name="Venta" [(ngModel)]="jsonSolicitud.Productos.Lineas" name="Lineas" [disabled]="isEditable">
+                                                <span class="checkbox-text-wrap">
+                                                    Líneas de Creditos
+                                                </span>
+                                            </mat-checkbox>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-checkbox name="Carta" [(ngModel)]="jsonSolicitud.Productos.Carta" name="Carta" [disabled]="isEditable">
+                                                <span class="checkbox-text-wrap">
+                                                    Carta de Creditos
+                                                </span>
+                                            </mat-checkbox>
+                                        </div>
+                                    </div>
+
+                                    <h4 class="my-orange" style="font-weight: 400;    margin: 0 0 15px 0;">¿Para que lo quiero?</h4>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <mat-checkbox name="Credito" [(ngModel)]="jsonSolicitud.Objetivo.Capital" name="Capital" [disabled]="isEditable">
+                                                <span class="checkbox-text-wrap">
+                                                    Capital de trabajo
+                                                </span>
+                                            </mat-checkbox>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-checkbox name="Inversion" [(ngModel)]="jsonSolicitud.Objetivo.Inversion" name="Inversion" [disabled]="isEditable">
+                                                <span class="checkbox-text-wrap">
+                                                    Inversión
+                                                </span>
+                                            </mat-checkbox>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-checkbox name="Compra" [(ngModel)]="jsonSolicitud.Objetivo.Compra" name="Compra" [disabled]="isEditable">
+                                                <span class="checkbox-text-wrap">
+                                                    Compra de cartera
+                                                </span>
+                                            </mat-checkbox>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-checkbox name="Refinanciamientos" [(ngModel)]="jsonSolicitud.Objetivo.Refinanciamientos" name="Refinanciamientos" [disabled]="isEditable">
+                                                <span class="checkbox-text-wrap">
+                                                    Refinanciamientos
+                                                </span>
+                                            </mat-checkbox>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <mat-form-field class="input-full-width">
+                                                <input matInput placeholder="Motivo" [(ngModel)]="jsonSolicitud.Motivo" name="motivo" required [disabled]="isEditable">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <mat-form-field class="input-full-width">
+                                                <input matInput placeholder="Monto" [(ngModel)]="jsonSolicitud.Monto" name="monto" required [disabled]="isEditable">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-form-field class="input-full-width">
+                                                <mat-select placeholder="Tipo de moneda" [(ngModel)]="jsonSolicitud.Moneda" name="Moneda" required [disabled]="isEditable">
+                                                    <mat-option value="Peso">Peso (Peso Chileno)</mat-option>
+                                                    <mat-option value="Dolar (USD)">Dolar (USD)</mat-option>
+                                                    <mat-option value="EURO (EUR)">EURO (EUR)</mat-option>
+                                                    <mat-option value="UF">UF</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="text-rigth">
+                                        <div class="float-right margin-top-20">
+                                            <button mat-button type="submit" class="btn btn-green-fill btn-sm" [disabled]="!solicitudForm.form.valid">Enviar solicitud</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div *ngIf="isEditable">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="txt-name">Monto Solicitado</p>
+                                        <p>{{formatNumber(jsonSolicitud.Monto)}}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="txt-name">Moneda Seleccionada</p>
+                                        <p>{{jsonSolicitud.Moneda}}</p>
+                                    </div>
+                                </div>
+                                <h4 class="my-orange" style="font-weight: 400;    margin: 0 0 15px 0;">Productos solicitados</h4>
+                                <div class="row">
+                                    <div class="col-md-4" *ngIf="jsonSolicitud.Productos.Credito">
+                                        <p>Credito</p>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="jsonSolicitud.Productos.Leasing">
+                                        <p>Leasing</p>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="jsonSolicitud.Productos.Factoring">
+                                        <p>Factoring</p>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="jsonSolicitud.Productos.Boleta">
+                                        <p>Boleta de Garantía</p>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="jsonSolicitud.Productos.PAE">
+                                        <p>PAE</p>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="jsonSolicitud.Productos.Venta">
+                                        <p>Venta contado</p>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="jsonSolicitud.Productos.Lineas">
+                                        <p>Líneas de Creditos</p>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="jsonSolicitud.Productos.Carta">
+                                        <p>Carta de Creditos</p>
+                                    </div>
+                                </div>
+                                <h4 class="my-orange" style="font-weight: 400;    margin: 0 0 15px 0;">Sus objetivos</h4>
+                                <div class="row">
+                                    <div class="col-md-4" *ngIf="jsonSolicitud.Objetivo.Capital">
+                                        <p>Capital de trabajo</p>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="jsonSolicitud.Objetivo.Inversion">
+                                        <p>Inversión</p>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="jsonSolicitud.Objetivo.Compra">
+                                        <p>Compra de cartera</p>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="jsonSolicitud.Objetivo.Refinanciamientos">
+                                        <p>Refinanciamientos</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="modal fade" [ngClass]="modalFinalizar? 'show-dialog':''" style="background: #00000036;">
+    <div class="modal-dialog modal-lg" role="document" style="margin-top: 170px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">FInalizar</h5>
+                <button type="button" class="close" (click)="modalFinalizar = !modalFinalizar">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Estas seguro que deseas confirmar ?
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary cursor" (click)="modalFinalizar = !modalFinalizar">Cancelar</button>
+                <button class="btn btn-success cursor" (click)="sendEvaluacion()">Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="loader" [ngClass]="loaderHide ? 'loader-hide':''">
+    <div>
+        <p>CARGANDO DATOS...</p>
+        <mat-spinner></mat-spinner>
+    </div>
+</div>
+
+<mat-progress-bar *ngIf="isLoading" mode="indeterminate" style="bottom: 0px;margin-bottom: 0px;position: fixed;z-index: 1000;"></mat-progress-bar>
